@@ -5,7 +5,6 @@ import umc.umcspring.domain.common.BaseEntity;
 import umc.umcspring.domain.enums.Week;
 
 import javax.persistence.*;
-import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -19,14 +18,14 @@ public class StoreOperatingHours extends BaseEntity {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "CHAR(1)")
+    @Column(columnDefinition = "CHAR(3)")
     private Week week;
 
     @Column(nullable = false)
-    private LocalTime openingTime;
+    private String openingTime;
 
     @Column(nullable = false)
-    private LocalTime closingTime;
+    private String closingTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id", nullable = false)

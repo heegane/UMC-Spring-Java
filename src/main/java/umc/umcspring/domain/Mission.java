@@ -5,8 +5,10 @@ import umc.umcspring.domain.common.BaseEntity;
 import umc.umcspring.domain.mapping.MissionProgress;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -27,7 +29,7 @@ public class Mission extends BaseEntity {
     private String content;
 
     @Column(nullable = false)
-    private LocalDateTime deadline;
+    private LocalDate deadline;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id", nullable = false)

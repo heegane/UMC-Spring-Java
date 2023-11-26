@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.umcspring.apiPayload.code.status.ErrorStatus;
-import umc.umcspring.apiPayload.exception.handler.StoreTypeHandler;
+import umc.umcspring.apiPayload.exception.handler.BaseHandler;
 import umc.umcspring.converter.ReviewConverter;
 import umc.umcspring.converter.ReviewImageConverter;
 import umc.umcspring.domain.ReviewImage;
@@ -34,10 +34,10 @@ public class ReviewCommandServiceImpl implements ReviewCommandService{
     public Review addReview(Integer userId, Integer storeId, ReviewRequestDTO.AddDto request) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new StoreTypeHandler(ErrorStatus.USER_NOT_FOUND));
+                .orElseThrow(() -> new BaseHandler(ErrorStatus.USER_NOT_FOUND));
 
         Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new StoreTypeHandler(ErrorStatus.STORE_NOT_FOUND));
+                .orElseThrow(() -> new BaseHandler(ErrorStatus.STORE_NOT_FOUND));
 
         Review review = ReviewConverter.toReview(user,store,request);
 

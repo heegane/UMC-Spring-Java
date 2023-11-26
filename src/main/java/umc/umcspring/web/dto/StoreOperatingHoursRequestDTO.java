@@ -3,7 +3,6 @@ package umc.umcspring.web.dto;
 import java.util.List;
 
 public class StoreOperatingHoursRequestDTO {
-
     private List<OperatingHourDTO> operatingHours;
 
     public List<OperatingHourDTO> getOperatingHours() {

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.umcspring.apiPayload.code.status.ErrorStatus;
-import umc.umcspring.apiPayload.exception.handler.StoreTypeHandler;
+import umc.umcspring.apiPayload.exception.handler.BaseHandler;
 import umc.umcspring.converter.MissionConverter;
 import umc.umcspring.converter.MissionProgressConverter;
 import umc.umcspring.domain.Mission;
@@ -16,6 +16,7 @@ import umc.umcspring.repository.MissionRepository;
 import umc.umcspring.repository.StoreRepository;
 import umc.umcspring.repository.UserRepository;
 import umc.umcspring.web.dto.MissionRequestDTO;
+
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +33,7 @@ public class MissionCommandServiceImpl implements MissionCommandService{
     public Mission addMission(Integer storeId, MissionRequestDTO.AddDto request) {
 
         Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new StoreTypeHandler(ErrorStatus.STORE_NOT_FOUND));
+                .orElseThrow(() -> new BaseHandler(ErrorStatus.STORE_NOT_FOUND));
 
         Mission mission = MissionConverter.toMission(store,request);
 
@@ -44,13 +45,13 @@ public class MissionCommandServiceImpl implements MissionCommandService{
     public MissionProgress progressMission(Integer userId, Integer missionId) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new StoreTypeHandler(ErrorStatus.USER_NOT_FOUND));
+                .orElseThrow(() -> new BaseHandler(ErrorStatus.USER_NOT_FOUND));
 
         Mission mission = missionRepository.findById(missionId)
-                .orElseThrow(() -> new StoreTypeHandler(ErrorStatus.USER_NOT_FOUND));
+                .orElseThrow(() -> new BaseHandler(ErrorStatus.USER_NOT_FOUND));
 
         if(missionProgressRepository.findByMissionAndUser(mission,user).isPresent())
-            throw new StoreTypeHandler(ErrorStatus.DUPLICATED_MISSION);
+            throw new BaseHandler(ErrorStatus.DUPLICATED_MISSION);
 
         MissionProgress missionProgress = MissionProgressConverter.toMissionProgress(user,mission);
 

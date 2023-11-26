@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.umcspring.apiPayload.code.status.ErrorStatus;
-import umc.umcspring.apiPayload.exception.handler.StoreTypeHandler;
+import umc.umcspring.apiPayload.exception.handler.BaseHandler;
 import umc.umcspring.converter.StoreOperatingHoursConverter;
 import umc.umcspring.domain.Store;
 import umc.umcspring.domain.StoreOperatingHours;
@@ -27,7 +27,7 @@ public class StoreOperatingHoursCommandServiceImpl implements StoreOperatingHour
     public List<StoreOperatingHours> addStoreOperatingHours(Integer storeId, StoreRequestDTO.AddDto request) {
 
         Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new StoreTypeHandler(ErrorStatus.STORE_NOT_FOUND));
+                .orElseThrow(() -> new BaseHandler(ErrorStatus.STORE_NOT_FOUND));
 
         List<StoreOperatingHours> storeOperatingHoursList = StoreOperatingHoursConverter.toStoreOperatingHoursList(store,request);
 

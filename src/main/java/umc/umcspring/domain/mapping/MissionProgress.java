@@ -1,6 +1,8 @@
 package umc.umcspring.domain.mapping;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import umc.umcspring.domain.Mission;
 import umc.umcspring.domain.User;
 import umc.umcspring.domain.common.BaseEntity;
@@ -11,6 +13,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Builder
+@DynamicUpdate
+@DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class MissionProgress extends BaseEntity {

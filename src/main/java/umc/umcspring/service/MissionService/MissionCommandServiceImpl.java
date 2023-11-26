@@ -6,10 +6,15 @@ import org.springframework.transaction.annotation.Transactional;
 import umc.umcspring.apiPayload.code.status.ErrorStatus;
 import umc.umcspring.apiPayload.exception.handler.StoreTypeHandler;
 import umc.umcspring.converter.MissionConverter;
+import umc.umcspring.converter.MissionProgressConverter;
 import umc.umcspring.domain.Mission;
 import umc.umcspring.domain.Store;
+import umc.umcspring.domain.User;
+import umc.umcspring.domain.mapping.MissionProgress;
+import umc.umcspring.repository.MissionProgressRepository;
 import umc.umcspring.repository.MissionRepository;
 import umc.umcspring.repository.StoreRepository;
+import umc.umcspring.repository.UserRepository;
 import umc.umcspring.web.dto.MissionRequestDTO;
 
 @Service
@@ -19,6 +24,8 @@ public class MissionCommandServiceImpl implements MissionCommandService{
 
     private final MissionRepository missionRepository;
     private final StoreRepository storeRepository;
+    private final UserRepository userRepository;
+    private final MissionProgressRepository missionProgressRepository;
 
     @Override
     @Transactional
@@ -30,5 +37,23 @@ public class MissionCommandServiceImpl implements MissionCommandService{
         Mission mission = MissionConverter.toMission(store,request);
 
         return missionRepository.save(mission);
+    }
+
+    @Override
+    @Transactional
+    public MissionProgress progressMission(Integer userId, Integer missionId) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new StoreTypeHandler(ErrorStatus.USER_NOT_FOUND));
+
+        Mission mission = missionRepository.findById(missionId)
+                .orElseThrow(() -> new StoreTypeHandler(ErrorStatus.USER_NOT_FOUND));
+
+        if(missionProgressRepository.findByMissionAndUser(mission,user).isPresent())
+            throw new StoreTypeHandler(ErrorStatus.DUPLICATED_MISSION);
+
+        MissionProgress missionProgress = MissionProgressConverter.toMissionProgress(user,mission);
+
+        return missionProgressRepository.save(missionProgress);
     }
 }

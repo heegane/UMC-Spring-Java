@@ -12,7 +12,6 @@ import umc.umcspring.domain.Store;
 import umc.umcspring.domain.mapping.Review;
 import umc.umcspring.service.MissionService.MissionCommandService;
 import umc.umcspring.service.ReviewService.ReviewCommandService;
-import umc.umcspring.service.StoreOperatingHoursService.StoreOperatingHoursCommandService;
 import umc.umcspring.service.StoreService.StoreCommandService;
 import umc.umcspring.validation.annotation.ExistStores;
 import umc.umcspring.validation.annotation.ExistUsers;
@@ -28,14 +27,13 @@ import javax.validation.Valid;
 public class StoreRestController {
 
     private final StoreCommandService storeCommandService;
-    private final StoreOperatingHoursCommandService storeOperatingHoursCommandService;
     private final ReviewCommandService reviewCommandService;
     private final MissionCommandService missionCommandService;
 
     @PostMapping("/")
     public ApiResponse<StoreResponseDTO.AddResultDto> add(@RequestBody @Valid StoreRequestDTO.AddDto request) {
         Store store = storeCommandService.addStore(request);
-        storeOperatingHoursCommandService.addStoreOperatingHours(store.getId(), request);
+        storeCommandService.addStoreOperatingHours(store.getId(), request);
         return ApiResponse.onSuccess(StoreConverter.toAddResultDTO(store));
     }
 

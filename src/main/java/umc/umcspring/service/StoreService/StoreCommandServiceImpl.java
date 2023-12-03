@@ -6,11 +6,16 @@ import org.springframework.transaction.annotation.Transactional;
 import umc.umcspring.apiPayload.code.status.ErrorStatus;
 import umc.umcspring.apiPayload.exception.handler.BaseHandler;
 import umc.umcspring.converter.StoreConverter;
+import umc.umcspring.converter.StoreOperatingHoursConverter;
 import umc.umcspring.domain.Store;
+import umc.umcspring.domain.StoreOperatingHours;
 import umc.umcspring.domain.StoreType;
+import umc.umcspring.repository.StoreOperatingHoursRepository;
 import umc.umcspring.repository.StoreRepository;
 import umc.umcspring.repository.StoreTypeRepository;
 import umc.umcspring.web.dto.StoreRequestDTO;
+
+import java.util.List;
 
 
 @Service
@@ -20,6 +25,7 @@ public class StoreCommandServiceImpl implements StoreCommandService {
 
     private final StoreRepository storeRepository;
     private final StoreTypeRepository storeTypeRepository;
+    private final StoreOperatingHoursRepository storeOperatingHoursRepository;
 
     @Override
     @Transactional
@@ -31,6 +37,20 @@ public class StoreCommandServiceImpl implements StoreCommandService {
         Store store = StoreConverter.toStore(request, storeType);
 
         return storeRepository.save(store);
+    }
+
+    @Override
+    @Transactional
+    public List<StoreOperatingHours> addStoreOperatingHours(Integer storeId, StoreRequestDTO.AddDto request) {
+
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new BaseHandler(ErrorStatus.STORE_NOT_FOUND));
+
+        List<StoreOperatingHours> storeOperatingHoursList = StoreOperatingHoursConverter.toStoreOperatingHoursList(store,request);
+
+        storeOperatingHoursRepository.saveAll(storeOperatingHoursList);
+
+        return storeOperatingHoursList;
     }
 
     @Override

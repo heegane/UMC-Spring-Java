@@ -1,5 +1,6 @@
 package umc.umcspring.web.dto;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import umc.umcspring.validation.annotation.ExistStoreTypes;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class StoreRequestDTO {
 
-    @Getter
+    @Getter(AccessLevel.PUBLIC)
     public static class AddDto{
 
         @NotBlank(message = "가게 이름을 입력해주세요!")

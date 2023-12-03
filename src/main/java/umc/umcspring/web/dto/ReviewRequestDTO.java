@@ -1,5 +1,6 @@
 package umc.umcspring.web.dto;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class ReviewRequestDTO {
 
-    @Getter
+    @Getter(AccessLevel.PUBLIC)
     public static class AddDto{
 
         @NotNull(message = "점수를 입력해주세요!")

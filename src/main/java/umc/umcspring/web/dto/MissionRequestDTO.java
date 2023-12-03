@@ -1,5 +1,6 @@
 package umc.umcspring.web.dto;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
@@ -9,7 +10,7 @@ import javax.validation.constraints.Size;
 
 public class MissionRequestDTO {
 
-    @Getter
+    @Getter(AccessLevel.PUBLIC)
     public static class AddDto{
 
         @NotNull(message = "미션 포인트를 입력해주세요!")

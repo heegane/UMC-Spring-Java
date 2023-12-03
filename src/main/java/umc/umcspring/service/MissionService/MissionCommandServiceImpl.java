@@ -48,7 +48,7 @@ public class MissionCommandServiceImpl implements MissionCommandService{
                 .orElseThrow(() -> new BaseHandler(ErrorStatus.USER_NOT_FOUND));
 
         Mission mission = missionRepository.findById(missionId)
-                .orElseThrow(() -> new BaseHandler(ErrorStatus.USER_NOT_FOUND));
+                .orElseThrow(() -> new BaseHandler(ErrorStatus.MISSION_NOT_FOUND));
 
         if(missionProgressRepository.findByMissionAndUser(mission,user).isPresent())
             throw new BaseHandler(ErrorStatus.DUPLICATED_MISSION);
@@ -56,5 +56,12 @@ public class MissionCommandServiceImpl implements MissionCommandService{
         MissionProgress missionProgress = MissionProgressConverter.toMissionProgress(user,mission);
 
         return missionProgressRepository.save(missionProgress);
+    }
+
+    @Override
+    public boolean isMissionExists(Integer missionId) {
+
+        return missionRepository.findById(missionId).isPresent();
+
     }
 }

@@ -3,7 +3,7 @@ package umc.umcspring.validation.validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import umc.umcspring.apiPayload.code.status.ErrorStatus;
-import umc.umcspring.repository.StoreRepository;
+import umc.umcspring.service.StoreService.StoreCommandService;
 import umc.umcspring.validation.annotation.ExistStores;
 
 import javax.validation.ConstraintValidator;
@@ -13,7 +13,7 @@ import javax.validation.ConstraintValidatorContext;
 @RequiredArgsConstructor
 public class StoresExistValidator implements ConstraintValidator<ExistStores, Integer> {
 
-    private final StoreRepository storeRepository;
+    private final StoreCommandService storeCommandService;
 
     @Override
     public void initialize(ExistStores constraintAnnotation) {
@@ -22,7 +22,8 @@ public class StoresExistValidator implements ConstraintValidator<ExistStores, In
 
     @Override
     public boolean isValid(Integer storeId, ConstraintValidatorContext context) {
-        boolean isValid = storeRepository.findById(storeId).isPresent();
+
+        boolean isValid = storeCommandService.isStoreExists(storeId);
 
         if (!isValid) {
             context.disableDefaultConstraintViolation();

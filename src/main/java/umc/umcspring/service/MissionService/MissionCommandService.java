@@ -9,4 +9,6 @@ public interface MissionCommandService {
     Mission addMission(Integer storeId, MissionRequestDTO.AddDto request);
 
     MissionProgress progressMission(Integer userId, Integer missionId);
+
+    boolean isMissionExists(Integer missionId);
 }

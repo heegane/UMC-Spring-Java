@@ -5,4 +5,8 @@ import umc.umcspring.web.dto.StoreRequestDTO;
 
 public interface StoreCommandService {
     Store addStore(StoreRequestDTO.AddDto request);
+
+    boolean isStoreExists(Integer storeId);
+
+    boolean isStoreTypeExists(Integer storeTypeId);
 }

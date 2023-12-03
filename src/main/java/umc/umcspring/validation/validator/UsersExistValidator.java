@@ -3,7 +3,7 @@ package umc.umcspring.validation.validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import umc.umcspring.apiPayload.code.status.ErrorStatus;
-import umc.umcspring.repository.UserRepository;
+import umc.umcspring.service.UserService.UserCommandService;
 import umc.umcspring.validation.annotation.ExistUsers;
 
 import javax.validation.ConstraintValidator;
@@ -13,7 +13,7 @@ import javax.validation.ConstraintValidatorContext;
 @RequiredArgsConstructor
 public class UsersExistValidator implements ConstraintValidator<ExistUsers, Integer>{
 
-    private final UserRepository userRepository;
+    private final UserCommandService userCommandService;
 
     @Override
     public void initialize(ExistUsers constraintAnnotation) {
@@ -22,7 +22,8 @@ public class UsersExistValidator implements ConstraintValidator<ExistUsers, Inte
 
     @Override
     public boolean isValid(Integer userId, ConstraintValidatorContext context) {
-        boolean isValid = userRepository.findById(userId).isPresent();
+
+        boolean isValid = userCommandService.isUserExists(userId);
 
         if (!isValid) {
             context.disableDefaultConstraintViolation();

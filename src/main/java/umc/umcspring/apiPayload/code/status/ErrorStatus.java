@@ -37,7 +37,8 @@ public enum ErrorStatus implements BaseErrorCode {
     STORE_NOT_FOUND(HttpStatus.NOT_FOUND, "STORE4001","가게가 없습니다."),
 
     // Mission Error
-    DUPLICATED_MISSION(HttpStatus.BAD_REQUEST,"MISSION4001","이미 진행중인/완료된 미션입니다.");
+    DUPLICATED_MISSION(HttpStatus.BAD_REQUEST,"MISSION4001","이미 진행중인/완료된 미션입니다."),
+    MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION4002", "미션이 없습니다");
 
     private final HttpStatus httpStatus;
     private final String code;

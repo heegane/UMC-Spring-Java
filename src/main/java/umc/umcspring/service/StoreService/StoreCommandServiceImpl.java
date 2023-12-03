@@ -33,4 +33,18 @@ public class StoreCommandServiceImpl implements StoreCommandService {
         return storeRepository.save(store);
     }
 
+    @Override
+    public boolean isStoreExists(Integer storeId) {
+
+        return storeRepository.findById(storeId).isPresent();
+
+    }
+
+    @Override
+    public boolean isStoreTypeExists(Integer storeTypeId) {
+
+        return storeTypeRepository.findById(storeTypeId).isPresent();
+
+    }
+
 }

@@ -61,6 +61,10 @@ public class MissionCommandServiceImpl implements MissionCommandService{
     @Override
     public boolean isMissionExists(Integer missionId) {
 
+        if(missionId == null) {
+            return false;
+        }
+
         return missionRepository.findById(missionId).isPresent();
 
     }

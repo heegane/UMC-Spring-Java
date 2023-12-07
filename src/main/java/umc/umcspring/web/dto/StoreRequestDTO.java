@@ -19,7 +19,7 @@ public class StoreRequestDTO {
         @NotBlank(message = "가게 이름을 입력해주세요!")
         String name;
 
-        @Size(min = 5, max = 12)
+        @Size(min = 5, max = 50)
         @NotEmpty(message = "가게의 도로명 주소를 입력해주세요!")
         String roadAddress;
 

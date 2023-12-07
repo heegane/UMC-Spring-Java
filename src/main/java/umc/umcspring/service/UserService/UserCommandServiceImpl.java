@@ -15,6 +15,10 @@ public class UserCommandServiceImpl implements UserCommandService{
     @Override
     public boolean isUserExists(Integer userId) {
 
+        if(userId == null) {
+            return false;
+        }
+
         return userRepository.findById(userId).isPresent();
 
     }

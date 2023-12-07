@@ -63,6 +63,10 @@ public class StoreCommandServiceImpl implements StoreCommandService {
     @Override
     public boolean isStoreTypeExists(Integer storeTypeId) {
 
+        if (storeTypeId == null) {
+            return false;
+        }
+
         return storeTypeRepository.findById(storeTypeId).isPresent();
 
     }

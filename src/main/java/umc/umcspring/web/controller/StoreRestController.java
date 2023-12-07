@@ -62,4 +62,12 @@ public class StoreRestController {
         return ApiResponse.onSuccess(StoreConverter.reviewPreViewListDTO(reviewList));
     }
 
+    @GetMapping("/{storeId}/missions")
+    public ApiResponse<StoreResponseDTO.MissionPreViewListDTO> getMissionList(@ExistStores @PathVariable(name = "storeId") Integer storeId, @RequestParam(name = "page") Integer page){
+
+        Page<Mission> missionList = missionCommandService.getMissionListByStore(storeId,page);
+
+        return ApiResponse.onSuccess(StoreConverter.missionPreViewListDTO(missionList));
+    }
+
 }

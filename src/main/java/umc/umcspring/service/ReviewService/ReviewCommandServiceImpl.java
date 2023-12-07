@@ -53,11 +53,20 @@ public class ReviewCommandServiceImpl implements ReviewCommandService{
     }
 
     @Override
-    public Page<Review> getReviewList(Integer storeId, Integer page) {
+    public Page<Review> getReviewListByStore(Integer storeId, Integer page) {
 
         Store store = storeRepository.findById(storeId).get();
 
         Page<Review> StorePage = reviewRepository.findAllByStore(store, PageRequest.of(page, 10));
         return StorePage;
+    }
+
+    @Override
+    public Page<Review> getReviewListByUser(Integer userId, Integer page) {
+
+        User user = userRepository.findById(userId).get();
+
+        Page<Review> userPage = reviewRepository.findAllByUser(user, PageRequest.of(page, 10));
+        return  userPage;
     }
 }

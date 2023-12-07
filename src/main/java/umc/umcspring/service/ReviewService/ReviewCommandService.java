@@ -8,5 +8,7 @@ public interface ReviewCommandService {
 
     Review addReview(Integer userId, Integer storeId, ReviewRequestDTO.AddDto request);
 
-    Page<Review> getReviewList(Integer storeId, Integer page);
+    Page<Review> getReviewListByStore(Integer storeId, Integer page);
+
+    Page<Review> getReviewListByUser(Integer userId, Integer page);
 }

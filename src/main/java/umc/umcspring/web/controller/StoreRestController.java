@@ -57,7 +57,7 @@ public class StoreRestController {
     @GetMapping("/{storeId}/reviews")
     public ApiResponse<StoreResponseDTO.ReviewPreViewListDTO> getReviewList(@ExistStores @PathVariable(name = "storeId") Integer storeId, @RequestParam(name = "page") Integer page){
 
-        Page<Review> reviewList = reviewCommandService.getReviewList(storeId,page);
+        Page<Review> reviewList = reviewCommandService.getReviewListByStore(storeId,page);
 
         return ApiResponse.onSuccess(StoreConverter.reviewPreViewListDTO(reviewList));
     }

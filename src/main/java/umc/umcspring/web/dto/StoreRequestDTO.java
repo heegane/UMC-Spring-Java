@@ -33,4 +33,6 @@ public class StoreRequestDTO {
         @NotEmpty(message = "가게의 운영시간을 입력해주세요!")
         List<OperatingHourDTO> operatingHours;
     }
+
+
 }

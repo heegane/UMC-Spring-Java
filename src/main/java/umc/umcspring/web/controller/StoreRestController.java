@@ -1,6 +1,7 @@
 package umc.umcspring.web.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import umc.umcspring.apiPayload.ApiResponse;
@@ -18,6 +19,7 @@ import umc.umcspring.validation.annotation.ExistUsers;
 import umc.umcspring.web.dto.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -50,6 +52,14 @@ public class StoreRestController {
                                                                    @RequestBody @Valid MissionRequestDTO.AddDto request) {
         Mission mission = missionCommandService.addMission(storeId, request);
         return ApiResponse.onSuccess(MissionConverter.toAddResultDTO(mission));
+    }
+
+    @GetMapping("/{storeId}/reviews")
+    public ApiResponse<StoreResponseDTO.ReviewPreViewListDTO> getReviewList(@ExistStores @PathVariable(name = "storeId") Integer storeId, @RequestParam(name = "page") Integer page){
+
+        Page<Review> reviewList = reviewCommandService.getReviewList(storeId,page);
+
+        return ApiResponse.onSuccess(StoreConverter.reviewPreViewListDTO(reviewList));
     }
 
 }

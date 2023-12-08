@@ -15,4 +15,6 @@ public interface MissionCommandService {
     boolean isMissionExists(Integer missionId);
 
     Page<Mission> getMissionListByStore(Integer storeId, Integer page);
+
+    Page<MissionProgress> getMissionListByUserAndStatus(Integer userId, Integer page);
 }

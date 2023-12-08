@@ -12,6 +12,7 @@ import umc.umcspring.converter.MissionProgressConverter;
 import umc.umcspring.domain.Mission;
 import umc.umcspring.domain.Store;
 import umc.umcspring.domain.User;
+import umc.umcspring.domain.enums.MissionStatus;
 import umc.umcspring.domain.mapping.MissionProgress;
 import umc.umcspring.repository.MissionProgressRepository;
 import umc.umcspring.repository.MissionRepository;
@@ -78,5 +79,14 @@ public class MissionCommandServiceImpl implements MissionCommandService{
 
         Page<Mission> storeMissions = missionRepository.findAllByStore(store, PageRequest.of(page, 10));
         return  storeMissions;
+    }
+
+    @Override
+    public Page<MissionProgress> getMissionListByUserAndStatus(Integer userId, Integer page) {
+
+        User user = userRepository.findById(userId).get();
+
+        Page<MissionProgress> userMissions = missionProgressRepository.findAllByUserAndStatus(user,MissionStatus.PROGRESS, PageRequest.of(page,10));
+        return userMissions;
     }
 }
